@@ -1,14 +1,18 @@
+import os
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+import environ
 
+env = environ.Env(DEBUG=(bool, False))
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure--iijtcsbepi$ckf+3+_i)1x3lu=2h=i5(_zx9+ps@kg&59(57="
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
+DEBUG = env("DEBUG")
 ALLOWED_HOSTS = ["*"]
 
 
@@ -26,6 +30,7 @@ INSTALLED_APPS = [
     "channels",
     "corsheaders",
     "knox",
+    "core",
     "users",
     "card_games",
     "chat",
@@ -69,14 +74,15 @@ WSGI_APPLICATION = "core.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "webcasino",
-        "USER": "webcasino",
-        "PASSWORD": "webcasino",
-        "HOST": "localhost",
-        "PORT": "5432",
-    }
+    "default": env.db(),
+    # "default": {
+    #     "ENGINE": "django.db.backends.postgresql",
+    #     "NAME": "webcasino",
+    #     "USER": "webcasino",
+    #     "PASSWORD": "webcasino",
+    #     "HOST": "localhost",
+    #     "PORT": "5432",
+    # }
 }
 
 

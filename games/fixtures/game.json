@@ -1,0 +1,13 @@
+[
+  {
+    "model": "games.game",
+    "pk": 1,
+    "fields": {
+      "name": "Slot Legends",
+      "description": "Slot Legends is a 5-reel, 3-row video slot featuring Wilds, Free Spins, and a Bonus Game.",
+      "release_date": "2022-01-01",
+      "rating": 4.5,
+      "category": 1
+    }
+  }
+]

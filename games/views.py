@@ -1,6 +1,11 @@
-from games.models import Game
-from games.serializers import GameSerializer
+from games.models import Game, GameCategory
+from games.serializers import GameCategorySerializer, GameSerializer
 from rest_framework.viewsets import ModelViewSet
+
+
+class GameCategoryViewSet(ModelViewSet):
+    queryset = GameCategory.objects.all()
+    serializer_class = GameCategorySerializer
 
 
 class GameViewSet(ModelViewSet):

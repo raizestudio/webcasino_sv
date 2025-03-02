@@ -1,0 +1,9 @@
+[
+  {
+    "model": "games.gamecategory",
+    "pk": 1,
+    "fields": {
+      "name": "Slots"
+    }
+  }
+]

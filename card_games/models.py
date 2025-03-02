@@ -2,6 +2,7 @@ import random
 import uuid
 
 from django.db import models
+from games.models import Game
 
 
 class Deck(models.Model):
@@ -42,12 +43,11 @@ class Table(models.Model):
     decks = models.ManyToManyField(Deck, related_name="tables")
 
     class Meta:
-        abstract = True
+        # abstract = True
         verbose_name_plural = "tables"
 
 
-class TexasHoldEm(Table):
-    deck_cards = models.IntegerField()
+class Poker(Game):
     # flop_cards = models.IntegerField()
     # turn_cards = models.IntegerField()
     # river_cards = models.IntegerField()
@@ -65,3 +65,8 @@ class TexasHoldEm(Table):
     # max_all_in = models.IntegerField()
     # max_showdown = models.IntegerField()
     timeout = models.IntegerField()
+
+
+class TexasHoldEm(Poker):
+
+    deck_cards = models.IntegerField()

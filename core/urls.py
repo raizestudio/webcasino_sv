@@ -14,5 +14,6 @@ urlpatterns = [
     path("auth/", include("auth.urls")),
     path("api-auth/", include("rest_framework.urls")),
     path("users/", include("users.urls")),
+    path("games/", include("games.urls")),
     path("card-games/", include("card_games.urls")),
 ]
