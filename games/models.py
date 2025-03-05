@@ -1,5 +1,4 @@
 from django.db import models
-from polymorphic.models import PolymorphicModel
 
 
 class GameCategory(models.Model):
@@ -9,7 +8,7 @@ class GameCategory(models.Model):
         return self.name
 
 
-class Game(PolymorphicModel):
+class Game(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     release_date = models.DateField(null=True)
