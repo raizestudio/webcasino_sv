@@ -1,7 +1,12 @@
 [
   {
     "model": "games.gamecategory",
-    "pk": 1,
+    "fields": {
+      "name": "Table"
+    }
+  },
+  {
+    "model": "games.gamecategory",
     "fields": {
       "name": "Slots"
     }

@@ -1,30 +1,45 @@
-from django.contrib.auth.management.commands.createsuperuser import (
-    Command as BaseCreateSuperUserCommand,
-)
 from django.core.management import CommandError
+from django.core.management.base import BaseCommand
+from django.db.transaction import atomic
+from financial.models import Currency, Wallet
 
 
-class Command(BaseCreateSuperUserCommand):
+class Command(BaseCommand):
     help = "Create a superuser"
 
     def add_arguments(self, parser):
         super().add_arguments(parser)
-        # parser.add_argument("--custom-field", type=str, help="Custom field for the superuser")
+        parser.add_argument("--email", type=str, help="Email for the superuser")
+        parser.add_argument("--username", type=str, help="Username for the superuser")
+        parser.add_argument("--password", type=str, help="Password for the superuser")
 
     def handle(self, *args, **options):
         print("Custom createsuperuser command is running...")  # Debug
 
-        # custom_field = options.get("custom_field")
+        if not options.get("email"):
+            raise CommandError("The --email option is required.")
 
-        # if not custom_field:
-        #     raise CommandError("The --custom-field option is required.")
+        if not options.get("username"):
+            raise CommandError("The --username option is required.")
 
-        super().handle(*args, **options)
+        if not options.get("password"):
+            raise CommandError("The --password option is required.")
 
         from django.contrib.auth import get_user_model
 
-        User = get_user_model()
-        # user = User.objects.get(username=options["username"])
+        print(options)
+        with atomic():
+            User = get_user_model()
+            _user = User.objects.create_superuser(
+                username=options["username"],
+                email=options["email"],
+                password=options["password"],
+            )
+            _user.is_superuser = True
+            _user.is_staff = True
+            _user.save()
+            _free_currency = Currency.objects.get(code="tkn")
+            _wallet = Wallet.objects.create(user=_user, currency=_free_currency, balance=1000)
         # user.custom_field = custom_field
         # user.save()
 
