@@ -1,7 +1,9 @@
 from django.core.management import CommandError
 from django.core.management.base import BaseCommand
 from django.db.transaction import atomic
+
 from financial.models import Currency, Wallet
+from users.models import Player
 
 
 class Command(BaseCommand):
@@ -37,11 +39,9 @@ class Command(BaseCommand):
             )
             _user.is_superuser = True
             _user.is_staff = True
+            _user.is_admin = True
             _user.save()
             _free_currency = Currency.objects.get(code="tkn")
             _wallet = Wallet.objects.create(user=_user, currency=_free_currency, balance=1000)
-        # user.custom_field = custom_field
-        # user.save()
 
-        # self.stdout.write(self.style.SUCCESS(f"Superuser created with custom field: {custom_field}"))
         self.stdout.write(self.style.SUCCESS(f"Superuser created with custom field: "))

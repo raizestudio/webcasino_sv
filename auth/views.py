@@ -1,4 +1,3 @@
-from auth.serializers import CustomAuthTokenSerializer
 from django.contrib.auth import login
 from knox.views import LoginView as KnoxLoginView
 from knox.views import LogoutAllView as KnoxLogoutAllView
@@ -6,6 +5,9 @@ from knox.views import LogoutView as KnoxLogoutView
 from rest_framework import permissions
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from auth.serializers import CustomAuthTokenSerializer
 from users.serializers import UserSerializer
 
 
@@ -25,9 +27,17 @@ class LoginView(KnoxLoginView):
         return Response({"token": knox_response["token"], "expiry": knox_response["expiry"], "user": user_data})  # Add user info
 
 
+class AuthView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, format=None):
+        user = request.user
+        return Response({"user": UserSerializer(user).data})
+
+
 class LogoutView(KnoxLogoutView):
     permission_classes = (permissions.IsAuthenticated,)
-    authentication_classes = (TokenAuthentication,)
+    # authentication_classes = (TokenAuthentication,)
 
     def post(self, request, format=None):
         return super().post(request, format=None)
@@ -35,7 +45,7 @@ class LogoutView(KnoxLogoutView):
 
 class LogoutAllView(KnoxLogoutAllView):
     permission_classes = (permissions.IsAuthenticated,)
-    authentication_classes = (TokenAuthentication,)
+    # authentication_classes = (TokenAuthentication,)
 
     def post(self, request, format=None):
         return super().post(request, format=None)
