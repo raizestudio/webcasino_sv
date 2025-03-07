@@ -13,3 +13,7 @@ __pycache__/
 
 # Db
 db.sqlite3
+
+# Static files
+media/
+static/
