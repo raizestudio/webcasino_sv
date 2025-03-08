@@ -1,6 +1,7 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
-
+from django.contrib.contenttypes.models import ContentType
+from auth_core.models import ObjectPermission
 
 class UserManager(BaseUserManager):
     def create_user(self, username, email, password=None, **extra_fields):
@@ -26,7 +27,7 @@ class UserManager(BaseUserManager):
     def get_active_users(self):
         return self.filter(is_active=True)
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     """The custom user model"""
     
     email = models.EmailField(unique=True)
@@ -48,10 +49,28 @@ class User(AbstractBaseUser):
         return self.email
 
     def has_perm(self, perm, obj=None):
-        return self.is_admin
+        """
+        Check if the user has a specific permission on the target object.
+        """
 
-    def has_module_perms(self, app_label):
-        return True
+        if obj is None:
+            # Global permission check
+            return super().has_perm(perm)
+
+        # Get the content type for the target object
+        content_type = ContentType.objects.get_for_model(obj)
+
+        # Query ObjectPermission to check if the user has permission on this object
+        permission = ObjectPermission.objects.filter(
+            permission__codename=perm,
+            owner_object_id=str(self.pk),
+            owner_content_type=ContentType.objects.get_for_model(self),
+            target_object_id=str(obj.pk),
+            target_content_type=content_type
+        ).exists()
+
+        return permission
+
 
 
 class UserSecurity(models.Model):
