@@ -1,0 +1,9 @@
+[
+  {
+    "model": "geo.address",
+    "fields": {
+      "number": "1",
+      "street": 1
+    }
+  }
+]

@@ -1,0 +1,11 @@
+[
+  {
+    "model": "geo.city",
+    "fields": {
+      "name": "Paris",
+      "postal_code": "75000",
+      "primary": "FR-ARA",
+      "secondary": "FR-AIN"
+    }
+  }
+]

@@ -1,8 +1,8 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.backends import ModelBackend
+from django.contrib.auth.backends import ModelBackend, BaseBackend
 
 User = get_user_model()
-
+from auth_core.models import APIKey
 
 class EmailBackend(ModelBackend):
     """Authenticate using email instead of username."""
@@ -19,3 +19,4 @@ class EmailBackend(ModelBackend):
         if user.check_password(password):
             return user
         return None
+

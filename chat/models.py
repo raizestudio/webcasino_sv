@@ -2,6 +2,7 @@ from django.db import models
 
 
 class Message(models.Model):
+    """Model definition for Message."""
     content = models.TextField()
 
     author = models.ForeignKey("users.User", on_delete=models.CASCADE, null=True)
@@ -10,6 +11,7 @@ class Message(models.Model):
 
 
 class Room(models.Model):
+    """Model definition for Room."""
     name = models.CharField(max_length=100)
     is_public = models.BooleanField(default=True)
 

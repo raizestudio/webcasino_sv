@@ -14,7 +14,7 @@ urlpatterns = [
     # path("auth/logout/", LogoutView.as_view()),
     # path("auth/logout-all/", LogoutAllView.as_view()),
     # path("auth/", include("knox.urls")),
-    path("auth/", include("auth.urls")),
+    path("auth/", include("auth_core.urls")),
     path("api-auth/", include("rest_framework.urls")),
     path("users/", include("users.urls")),
     path("games/", include("games.urls")),

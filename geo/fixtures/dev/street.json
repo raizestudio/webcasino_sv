@@ -1,0 +1,9 @@
+[
+  {
+    "model": "geo.street",
+    "fields": {
+      "name": "Rue de Rivoli",
+      "city": 1
+    }
+  }
+]

@@ -2,17 +2,19 @@ from django.contrib.auth import login
 from knox.views import LoginView as KnoxLoginView
 from knox.views import LogoutAllView as KnoxLogoutAllView
 from knox.views import LogoutView as KnoxLogoutView
-from rest_framework import permissions
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 
-from auth.serializers import CustomAuthTokenSerializer
+from auth_core.serializers import CustomAuthTokenSerializer, APIKeyClientSerializer, APIKeySerializer
 from users.serializers import UserSerializer
+from auth_core.models import APIKey, APIKeyClient
 
 
 class LoginView(KnoxLoginView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (AllowAny,)
 
     def post(self, request, format=None):
         serializer = CustomAuthTokenSerializer(data=request.data)
@@ -30,7 +32,7 @@ class LoginView(KnoxLoginView):
 
 
 class AuthView(APIView):
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None):
         user = request.user
@@ -38,7 +40,7 @@ class AuthView(APIView):
 
 
 class LogoutView(KnoxLogoutView):
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     # authentication_classes = (TokenAuthentication,)
 
     def post(self, request, format=None):
@@ -46,8 +48,22 @@ class LogoutView(KnoxLogoutView):
 
 
 class LogoutAllView(KnoxLogoutAllView):
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     # authentication_classes = (TokenAuthentication,)
 
     def post(self, request, format=None):
         return super().post(request, format=None)
+
+
+class APIKeyClientViewSet(ModelViewSet):
+    queryset = APIKeyClient.objects.all()
+    serializer_class = APIKeyClientSerializer
+    permission_classes = (IsAdminUser,)
+    
+
+class APIKeyViewSet(ModelViewSet):
+    queryset = APIKey.objects.all()
+    serializer_class = APIKeySerializer
+    permission_classes = (IsAdminUser,)
+
+    

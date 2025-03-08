@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 
+from auth_core.models import APIKey, APIKeyClient
 
 class CustomAuthTokenSerializer(serializers.Serializer):
     email = serializers.CharField(trim_whitespace=False)
@@ -26,3 +27,15 @@ class CustomAuthTokenSerializer(serializers.Serializer):
 
         attrs["user"] = user
         return attrs
+
+
+class APIKeyClientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = APIKeyClient
+        fields = "__all__"
+        
+
+class APIKeySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = APIKey
+        fields = "__all__"

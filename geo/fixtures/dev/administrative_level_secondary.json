@@ -1,0 +1,10 @@
+[
+  {
+    "model": "geo.administrativelevelsecondary",
+    "fields": {
+      "code": "FR-AIN",
+      "name": "Ain",
+      "primary": "FR-ARA"
+    }
+  }
+]

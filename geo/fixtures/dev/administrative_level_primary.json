@@ -1,0 +1,10 @@
+[
+  {
+    "model": "geo.administrativelevelprimary",
+    "fields": {
+      "code": "FR-ARA",
+      "name": "Auvergne-Rhône-Alpes",
+      "country": "FR"
+    }
+  }
+]

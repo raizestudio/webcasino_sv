@@ -1,0 +1,22 @@
+[
+  {
+    "model": "geo.country",
+    "fields": {
+      "code": "PT",
+      "code_long": "PRT",
+      "name": "Portugal",
+      "name_official": "República Portuguesa",
+      "continent": "EU"
+    }
+  },
+  {
+    "model": "geo.country",
+    "fields": {
+      "code": "FR",
+      "code_long": "FRA",
+      "name": "France",
+      "name_official": "République française",
+      "continent": "EU"
+    }
+  }
+]

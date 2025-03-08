@@ -20,11 +20,15 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault("is_superuser", True)
         return self.create_user(username, email, password, **extra_fields)
 
-    def get_by_natural_key(self, username):
-        return self.get(username=username)
+    def get_by_natural_key(self, email):
+        return self.get(email=email)
 
+    def get_active_users(self):
+        return self.filter(is_active=True)
 
 class User(AbstractBaseUser):
+    """The custom user model"""
+    
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=40, unique=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
@@ -51,13 +55,22 @@ class User(AbstractBaseUser):
 
 
 class UserSecurity(models.Model):
+    """The user security model"""
     is_email_verified = models.BooleanField(default=False)
     is_phone_verified = models.BooleanField(default=False)
     is_two_factor_enabled = models.BooleanField(default=False)
+    antiphishing_code = models.CharField(max_length=6, blank=True, null=True)
 
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="security")
 
+class UserPreferences(models.Model):
+    """The user preferences model"""
+    is_email_notification_enabled = models.BooleanField(default=True)
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="preferences")
+    
 class PlayerProfile(models.Model):
-
+    """The player profile model"""
     updated_at = models.DateTimeField(auto_now=True)
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="player_profile")

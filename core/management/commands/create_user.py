@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db.transaction import atomic
 
 from financial.models import Currency, Wallet
-from users.models import PlayerProfile
+from users.models import PlayerProfile, UserSecurity, UserPreferences
 
 
 class Command(BaseCommand):
@@ -38,8 +38,11 @@ class Command(BaseCommand):
             )
             if options.get("is_staff"):
                 _user.is_staff = True
+                
             _user.save()
             _free_currency = Currency.objects.get(code="tkn")
             _wallet = Wallet.objects.create(user=_user, currency=_free_currency, balance=1000)
+            _user_security = UserSecurity.objects.create(user=_user)
+            _user_preferences = UserPreferences.objects.create(user=_user)
 
         self.stdout.write(self.style.SUCCESS(f"User created successfully: {_user.email}"))
