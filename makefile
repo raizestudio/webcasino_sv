@@ -23,3 +23,4 @@ lint:
 # Install dependencies
 install:
 	pip install -r requirements.txt
+	python manage.py install
