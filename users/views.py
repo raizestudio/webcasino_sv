@@ -1,10 +1,10 @@
+from knox.auth import TokenAuthentication
 from knox.views import LoginView as KnoxLoginView
 from rest_framework import viewsets
 from rest_framework.permissions import IsAdminUser
+
 from auth_core.authentication import APIKeyAuthentication
 from auth_core.permissions import IsAdminOrAPIKeyUser
-from knox.auth import TokenAuthentication
-
 from users.models import User
 from users.serializers import UserSerializer
 

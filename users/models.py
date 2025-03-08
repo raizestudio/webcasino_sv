@@ -1,7 +1,13 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-from django.db import models
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    BaseUserManager,
+    PermissionsMixin,
+)
 from django.contrib.contenttypes.models import ContentType
+from django.db import models
+
 from auth_core.models import ObjectPermission
+
 
 class UserManager(BaseUserManager):
     def create_user(self, username, email, password=None, **extra_fields):
@@ -27,9 +33,10 @@ class UserManager(BaseUserManager):
     def get_active_users(self):
         return self.filter(is_active=True)
 
+
 class User(AbstractBaseUser, PermissionsMixin):
     """The custom user model"""
-    
+
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=40, unique=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
@@ -66,15 +73,26 @@ class User(AbstractBaseUser, PermissionsMixin):
             owner_object_id=str(self.pk),
             owner_content_type=ContentType.objects.get_for_model(self),
             target_object_id=str(obj.pk),
-            target_content_type=content_type
+            target_content_type=content_type,
         ).exists()
 
         return permission
 
+    def get_all_permissions(self):
+        """
+        Return a set of permission strings that the user has.
+        """
+        permissions = ObjectPermission.objects.filter(
+            owner_object_id=str(self.pk),
+            owner_content_type=ContentType.objects.get_for_model(self),
+        ).values_list("permission__codename", "target_object_id", "target_content_type")
+
+        return permissions
 
 
 class UserSecurity(models.Model):
     """The user security model"""
+
     is_email_verified = models.BooleanField(default=False)
     is_phone_verified = models.BooleanField(default=False)
     is_two_factor_enabled = models.BooleanField(default=False)
@@ -82,14 +100,18 @@ class UserSecurity(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="security")
 
+
 class UserPreferences(models.Model):
     """The user preferences model"""
+
     is_email_notification_enabled = models.BooleanField(default=True)
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="preferences")
-    
+
+
 class PlayerProfile(models.Model):
     """The player profile model"""
+
     updated_at = models.DateTimeField(auto_now=True)
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="player_profile")

@@ -117,7 +117,7 @@ ASGI_APPLICATION = "core.asgi.application"
 MEDIA_DIR = BASE_DIR / "media"
 if not MEDIA_DIR.exists():
     MEDIA_DIR.mkdir()
-    
+
 STATIC_URL = "static/"
 MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
@@ -125,7 +125,6 @@ MEDIA_URL = "/media/"
 # User model
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "users.User"
-
 
 
 # CORS
@@ -154,7 +153,7 @@ AUTHENTICATION_BACKENDS = [
 LOG_DIR = BASE_DIR / "logs"
 if not LOG_DIR.exists():
     LOG_DIR.mkdir()
-    
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,

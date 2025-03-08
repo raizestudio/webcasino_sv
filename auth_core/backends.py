@@ -1,8 +1,9 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.backends import ModelBackend, BaseBackend
+from django.contrib.auth.backends import BaseBackend, ModelBackend
 
 User = get_user_model()
 from auth_core.models import APIKey
+
 
 class EmailBackend(ModelBackend):
     """Authenticate using email instead of username."""
@@ -20,10 +21,8 @@ class EmailBackend(ModelBackend):
             return user
         return None
 
-
     def get_user(self, user_id):
         try:
             return User.objects.get(pk=user_id)
         except User.DoesNotExist:
             return None
-        

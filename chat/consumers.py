@@ -19,7 +19,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         if not _room:
             await self.close()
             return
-        
+
         # Join the room group
         await self.channel_layer.group_add(self.room_group_name, self.channel_name)
 

@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand
 from django.db.transaction import atomic
 
 from financial.models import Currency, Wallet
-from users.models import PlayerProfile, UserSecurity, UserPreferences
+from users.models import PlayerProfile, UserPreferences, UserSecurity
 
 
 class Command(BaseCommand):

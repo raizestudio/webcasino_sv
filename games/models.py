@@ -19,6 +19,13 @@ class Game(models.Model):
 
     category = models.ForeignKey(GameCategory, on_delete=models.CASCADE)
 
+    class Meta:
+        ordering = ["-created_at"]
+        permissions = [
+            ("can_play", "Can play the game"),
+            ("can_review", "Can review the game"),
+        ]
+
     def __str__(self):
         return self.name
 

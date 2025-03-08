@@ -6,7 +6,6 @@ from django.core.management import call_command
 from django.core.management.base import BaseCommand, CommandError
 from django.db.utils import IntegrityError
 
-
 AVAILABLE_FIXTURES = (
     # auth
     "auth_core.apikeyclient",
@@ -30,6 +29,8 @@ ENVS = [
     "dev",
     "prod",
 ]
+
+
 class Command(BaseCommand):
 
     def add_arguments(self, parser):
@@ -41,7 +42,7 @@ class Command(BaseCommand):
         env = options.get("env", "dev")
         if env not in ENVS:
             env = "dev"
-            
+
         self.stdout.write(f"Environment: {env}")
         for fixture in AVAILABLE_FIXTURES:
             try:
@@ -51,4 +52,3 @@ class Command(BaseCommand):
                 self.stdout.write(f"Error loading {fixture}: {e}")
             except Exception as e:
                 self.stdout.write(f"Error loading {fixture}: {e}")
-  

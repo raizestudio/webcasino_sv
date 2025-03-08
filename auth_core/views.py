@@ -1,19 +1,25 @@
 from django.contrib.auth import login
+
+# from rest_framework.authentication import TokenAuthentication
+from knox.auth import TokenAuthentication
 from knox.views import LoginView as KnoxLoginView
 from knox.views import LogoutAllView as KnoxLogoutAllView
 from knox.views import LogoutView as KnoxLogoutView
-from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
-# from rest_framework.authentication import TokenAuthentication
-from knox.auth import TokenAuthentication
+from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-from auth_core.serializers import CustomAuthTokenSerializer, APIKeyClientSerializer, APIKeySerializer
-from users.serializers import UserSerializer
+from auth_core.authentication import APIKeyAuthentication
 from auth_core.models import APIKey, APIKeyClient
 from auth_core.permissions import IsAdminOrAPIKeyUser, IsAuthenticatedOrAPIKeyUser
-from auth_core.authentication import APIKeyAuthentication
+from auth_core.serializers import (
+    APIKeyClientSerializer,
+    APIKeySerializer,
+    CustomAuthTokenSerializer,
+)
+from users.serializers import UserSerializer
+
 
 class LoginView(KnoxLoginView):
     permission_classes = (AllowAny,)
@@ -39,14 +45,15 @@ class AuthView(APIView):
 
     def get(self, request, format=None):
         user = request.user
-        
+
         if hasattr(user, "is_authenticated"):
             return Response({"user": UserSerializer(user).data})
-        
+
         if hasattr(user, "api_key"):
             return Response({"api_key_client": APIKeyClientSerializer(user).data})
 
         return Response({"detail": "User or ApiKeyClient not found"})
+
 
 class LogoutView(KnoxLogoutView):
     permission_classes = (IsAuthenticated,)
@@ -68,11 +75,9 @@ class APIKeyClientViewSet(ModelViewSet):
     queryset = APIKeyClient.objects.all()
     serializer_class = APIKeyClientSerializer
     permission_classes = (IsAdminUser,)
-    
+
 
 class APIKeyViewSet(ModelViewSet):
     queryset = APIKey.objects.all()
     serializer_class = APIKeySerializer
     permission_classes = (IsAdminUser,)
-
-    

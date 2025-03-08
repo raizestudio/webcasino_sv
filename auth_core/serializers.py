@@ -3,6 +3,7 @@ from rest_framework import serializers
 
 from auth_core.models import APIKey, APIKeyClient
 
+
 class CustomAuthTokenSerializer(serializers.Serializer):
     email = serializers.CharField(trim_whitespace=False)
     password = serializers.CharField(trim_whitespace=False)
@@ -33,7 +34,7 @@ class APIKeyClientSerializer(serializers.ModelSerializer):
     class Meta:
         model = APIKeyClient
         fields = "__all__"
-        
+
 
 class APIKeySerializer(serializers.ModelSerializer):
     class Meta:
