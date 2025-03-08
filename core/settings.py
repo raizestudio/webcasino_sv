@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "knox",
     "core",
     "users",
+    "geo",
     "chat",
     "games",
     "financial",

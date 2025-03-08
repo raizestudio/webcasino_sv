@@ -1,0 +1,15 @@
+[tool.black]
+line-length = 110
+exclude = '''
+/(
+    \.git
+  | __pycache__
+  | old
+  | build
+  | dist
+  | venv
+  | frontend
+)/
+'''
+[tool.isort]
+profile = "black"

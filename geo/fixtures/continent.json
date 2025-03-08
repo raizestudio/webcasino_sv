@@ -1,0 +1,51 @@
+[
+  {
+    "model": "geo.continent",
+    "fields": {
+      "name": "Africa",
+      "code": "AF"
+    }
+  },
+  {
+    "model": "geo.continent",
+    "fields": {
+      "name": "Antarctica",
+      "code": "AN"
+    }
+  },
+  {
+    "model": "geo.continent",
+    "fields": {
+      "name": "Asia",
+      "code": "AS"
+    }
+  },
+  {
+    "model": "geo.continent",
+    "fields": {
+      "name": "Europe",
+      "code": "EU"
+    }
+  },
+  {
+    "model": "geo.continent",
+    "fields": {
+      "name": "North America",
+      "code": "NA"
+    }
+  },
+  {
+    "model": "geo.continent",
+    "fields": {
+      "name": "Oceania",
+      "code": "OC"
+    }
+  },
+  {
+    "model": "geo.continent",
+    "fields": {
+      "name": "South America",
+      "code": "SA"
+    }
+  }
+]

@@ -1,6 +1,7 @@
+from rest_framework.viewsets import ModelViewSet
+
 from games.models import Game, GameCategory
 from games.serializers import GameCategorySerializer, GameSerializer
-from rest_framework.viewsets import ModelViewSet
 
 
 class GameCategoryViewSet(ModelViewSet):

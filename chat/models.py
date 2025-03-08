@@ -11,6 +11,7 @@ class Message(models.Model):
 
 class Room(models.Model):
     name = models.CharField(max_length=100)
+    is_public = models.BooleanField(default=True)
 
     messages = models.ManyToManyField(Message, blank=True)
 

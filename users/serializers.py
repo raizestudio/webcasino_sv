@@ -1,11 +1,12 @@
 from rest_framework import serializers
+
 from users.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["id", "email", "username", "password"]  # Include password
+        fields = ["id", "email", "username", "password", "avatar"]  # Include password
         extra_kwargs = {"password": {"write_only": True}}  # Prevent password from being returned
 
     def create(self, validated_data):

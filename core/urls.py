@@ -8,7 +8,7 @@ from rest_framework.routers import DefaultRouter
 from core.views import RootView
 
 urlpatterns = [
-    path("", RootView.as_view()),
+    path("", RootView.as_view(), name="root-view"),
     path("admin/", admin.site.urls),
     # path("auth/login/", LoginView.as_view()),
     # path("auth/logout/", LogoutView.as_view()),

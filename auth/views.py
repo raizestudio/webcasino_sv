@@ -24,7 +24,9 @@ class LoginView(KnoxLoginView):
         knox_response = super().post(request, format=None).data
         user_data = UserSerializer(user).data
 
-        return Response({"token": knox_response["token"], "expiry": knox_response["expiry"], "user": user_data})  # Add user info
+        return Response(
+            {"token": knox_response["token"], "expiry": knox_response["expiry"], "user": user_data}
+        )  # Add user info
 
 
 class AuthView(APIView):

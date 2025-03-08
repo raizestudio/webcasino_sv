@@ -1,6 +1,7 @@
-from games.models import Game, GameCategory
 from rest_flex_fields import FlexFieldsModelSerializer
 from rest_framework import serializers
+
+from games.models import Game, GameCategory
 
 
 class GameCategorySerializer(serializers.ModelSerializer):

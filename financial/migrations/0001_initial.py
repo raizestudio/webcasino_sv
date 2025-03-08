@@ -15,33 +15,54 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Currency',
+            name="Currency",
             fields=[
-                ('code', models.CharField(max_length=10, primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=100)),
-                ('minor_unit', models.IntegerField()),
-                ('symbol', models.CharField(max_length=10)),
-                ('is_crypto', models.BooleanField(default=False)),
-                ('can_deposit', models.BooleanField(default=False)),
-                ('can_withdraw', models.BooleanField(default=False)),
-                ('is_free', models.BooleanField(default=False)),
+                ("code", models.CharField(max_length=10, primary_key=True, serialize=False)),
+                ("name", models.CharField(max_length=100)),
+                ("minor_unit", models.IntegerField()),
+                ("symbol", models.CharField(max_length=10)),
+                ("is_crypto", models.BooleanField(default=False)),
+                ("can_deposit", models.BooleanField(default=False)),
+                ("can_withdraw", models.BooleanField(default=False)),
+                ("is_free", models.BooleanField(default=False)),
             ],
         ),
         migrations.CreateModel(
-            name='Pool',
+            name="Pool",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('balance', models.FloatField()),
-                ('currency', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='financial.currency')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("balance", models.FloatField()),
+                (
+                    "currency",
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="financial.currency"),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Wallet',
+            name="Wallet",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('balance', models.FloatField()),
-                ('currency', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='financial.currency')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("balance", models.FloatField()),
+                (
+                    "currency",
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="financial.currency"),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL
+                    ),
+                ),
             ],
         ),
     ]
