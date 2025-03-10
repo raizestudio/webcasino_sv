@@ -11,7 +11,7 @@ AVAILABLE_FIXTURES = (
     "core.menu",
     # auth
     "auth_core.apikeyclient",
-    "auth_core.apikey",
+    # "auth_core.apikey",
     # geo
     "geo.continent",
     "geo.country",

@@ -62,6 +62,7 @@ class ObjectPermission(models.Model):
 class APIKeyClient(models.Model):
     """The API key client model"""
 
+    email = models.EmailField(primary_key=True)
     name = models.CharField(max_length=128)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -106,12 +107,12 @@ class APIKeyClient(models.Model):
 class APIKey(models.Model):
     """The API key model"""
 
-    key = models.CharField(max_length=128, primary_key=True)
+    key = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     label = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    client = models.ForeignKey(APIKeyClient, on_delete=models.CASCADE, related_name="api_key")
+    client = models.OneToOneField(APIKeyClient, on_delete=models.CASCADE, related_name="api_key")
 
     def __str__(self):
         return self.key

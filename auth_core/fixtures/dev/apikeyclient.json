@@ -2,7 +2,8 @@
   {
     "model": "auth_core.apikeyclient",
     "fields": {
-      "name": "Test API Key Client",
+      "email": "ap@t.io",
+      "name": "Test Client",
       "created_at": "2025-01-01T00:00:00Z",
       "updated_at": "2025-01-01T00:00:00Z"
     }
