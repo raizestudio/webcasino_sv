@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 
@@ -16,7 +17,8 @@ class APIKeyAuthentication(BaseAuthentication):
             _api_key = APIKey.objects.get(key=api_key)
 
         except APIKey.DoesNotExist:
-            print(f"API Key does not exist")
             raise AuthenticationFailed("Invalid API Key")
 
+        except ValidationError:
+            raise AuthenticationFailed("Invalid API Key")
         return (_api_key.client, None)

@@ -50,6 +50,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
     avatar = models.ImageField(upload_to="avatars/", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     objects = UserManager()
 
@@ -113,10 +114,42 @@ class UserPreferences(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="preferences")
 
 
+class PlayerProfileManager(models.Manager):
+    """Manager definition for the PlayerProfile model"""
+
+
+class PlayerProfileQuerySet(models.QuerySet):
+    """Queryset definition for the PlayerProfile model"""
+
+    def get_top_players(self):
+        return self.order_by("-rank")
+
+    def get_new_players(self):
+        return self.order_by("created_at")
+
+    def get_most_experienced_players(self):
+        return self.order_by("-experience")
+
+    def get_most_referals(self):
+        return self.annotate(referal_count=models.Count("referrals")).order_by("-referal_count")
+
+
 class PlayerProfile(models.Model):
     """The player profile model"""
 
+    rank = models.IntegerField(default=0)
+    experience = models.IntegerField(default=0)
+    referral_code = models.CharField(max_length=10, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="player_profile")
-    prefered_games = models.ManyToManyField("games.Game", related_name="players", blank=True)
+    favorite_games = models.ManyToManyField("games.Game", related_name="players", blank=True)
+    friends = models.ManyToManyField("self", blank=True)
+    blocked_users = models.ManyToManyField("self", blank=True)
+    referred_user = models.ForeignKey("self", on_delete=models.CASCADE, related_name="referrals", blank=True, null=True)
+
+    objects = PlayerProfileManager.from_queryset(PlayerProfileQuerySet)()
+
+    def __str__(self):
+        return self.user.username

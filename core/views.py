@@ -9,6 +9,7 @@ from core.serializers import MenuSerializer
 
 class RootView(APIView):
     def get(self, request):
+
         response = {
             "detail": "Should i call you mistah?",
             "api_version": settings.API_VERSION,

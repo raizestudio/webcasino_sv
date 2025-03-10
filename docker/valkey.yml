@@ -8,14 +8,6 @@ services:
       - DATABASE_URL=postgres://user:password@db:6379/valkeydb
       - VALKEY_SECRET_KEY=your_secret_key
 
-  # redis-commander:
-  #   image: rediscommander/redis-commander:latest
-  #   container_name: redis-commander
-  #   ports:
-  #     - "8081:8081"
-  #   networks:
-  #     - valkey_network
-
 volumes:
   valkey-db-data:
 

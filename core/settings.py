@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "django_filters",
     "channels",
     "corsheaders",
     "knox",
@@ -143,6 +144,10 @@ CHANNEL_LAYERS = {
 # REST Framework
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend",
+        "rest_framework.filters.OrderingFilter",
+    ],
 }
 
 # Authentication
@@ -150,6 +155,20 @@ AUTHENTICATION_BACKENDS = [
     "auth_core.backends.EmailBackend",
     "django.contrib.auth.backends.ModelBackend",
 ]
+
+# Cache
+CACHE_HOST = env("CACHE_HOST", default="")
+CACHE_PORT = env("CACHE_PORT", default="")
+CACHE_DB = env("CACHE_DB", default="")
+CACHE_TTL = env("CACHE_TTL", default=60)
+# CACHE_PASSWORD = env("CACHE_PASSWORD", default="")
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": f"redis://127.0.0.1:6379",
+    }
+}
 
 # Logging
 LOG_DIR = BASE_DIR / "logs"
