@@ -1,4 +1,5 @@
 import pytest
+from django.conf import settings
 from django.urls import reverse
 
 
@@ -8,4 +9,4 @@ def test_root_view(client):
     response = client.get(url)
 
     assert response.status_code == 200
-    assert response.json() == {"message": "Should i call you mistah?"}
+    assert response.json() == {"detail": "Should i call you mistah?", "api_version": settings.API_VERSION}

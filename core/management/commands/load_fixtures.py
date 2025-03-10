@@ -7,6 +7,8 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db.utils import IntegrityError
 
 AVAILABLE_FIXTURES = (
+    # core
+    "core.menu",
     # auth
     "auth_core.apikeyclient",
     "auth_core.apikey",
@@ -18,6 +20,8 @@ AVAILABLE_FIXTURES = (
     "geo.city",
     "geo.street",
     "geo.address",
+    # chat
+    "chat.room",
     # financial
     "financial.currency",
     # games

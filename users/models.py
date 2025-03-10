@@ -34,6 +34,10 @@ class UserManager(BaseUserManager):
         return self.filter(is_active=True)
 
 
+class UserQuerySet(models.QuerySet):
+    """Queryset definition for the User model"""
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     """The custom user model"""
 

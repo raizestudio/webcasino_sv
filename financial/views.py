@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 
-from financial.models import Currency, Wallet
-from financial.serializers import CurrencySerializer, WalletSerializer
+from financial.models import Currency, Pool, Wallet
+from financial.serializers import CurrencySerializer, PoolSerializer, WalletSerializer
 
 
 class CurrencyViewSet(ModelViewSet):
@@ -13,8 +13,7 @@ class WalletViewSet(ModelViewSet):
     queryset = Wallet.objects.all()
     serializer_class = WalletSerializer
 
-    def get_queryset(self):
-        if self.request.user.is_authenticated:
-            return Wallet.objects.filter(user=self.request.user)
 
-        return super().get_queryset()
+class PoolViewSet(ModelViewSet):
+    queryset = Pool.objects.all()
+    serializer_class = PoolSerializer

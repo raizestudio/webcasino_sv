@@ -1,8 +1,19 @@
 from django.urls import path
+from rest_framework.routers import DefaultRouter
 
-from auth_core.views import AuthView, LoginView, LogoutAllView, LogoutView
+from auth_core.views import (
+    AuthView,
+    LoginView,
+    LogoutAllView,
+    LogoutView,
+    SessionViewSet,
+)
 
-urlpatterns = [
+router = DefaultRouter()
+router.register("sessions", SessionViewSet)
+
+urlpatterns = router.urls
+urlpatterns += [
     path("login/", LoginView.as_view()),
     path("user/", AuthView.as_view()),
     path("logout/", LogoutView.as_view()),

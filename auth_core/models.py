@@ -2,6 +2,8 @@ from uuid import UUID
 
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
+from knox.models import AuthToken
+
 
 class ObjectPermissionManager(models.Manager):
     """The object permission manager"""
@@ -12,7 +14,7 @@ class ObjectPermissionManager(models.Manager):
         """
         owner_content_type = ContentType.objects.get_for_model(owner_object)
         target_content_type = ContentType.objects.get_for_model(target_object)
-        
+
         return super().update_or_create(
             permission=permission,
             owner_object_id=str(owner_object.pk),
@@ -20,22 +22,18 @@ class ObjectPermissionManager(models.Manager):
             target_object_id=str(target_object.pk),
             target_content_type=target_content_type,
         )
-    
+
+
 class ObjectPermission(models.Model):
     """The object permission model"""
 
     permission = models.ForeignKey("auth.Permission", on_delete=models.CASCADE)
     owner_object_id = models.CharField(max_length=255)  # Store any ID as a string
-    owner_content_type = models.ForeignKey(
-        "contenttypes.ContentType", on_delete=models.CASCADE, related_name="owner_object"
-    )
+    owner_content_type = models.ForeignKey("contenttypes.ContentType", on_delete=models.CASCADE, related_name="owner_object")
     target_object_id = models.CharField(max_length=255)  # Store any ID as a string
-    target_content_type = models.ForeignKey(
-        "contenttypes.ContentType", on_delete=models.CASCADE, related_name="target_object"
-    )
+    target_content_type = models.ForeignKey("contenttypes.ContentType", on_delete=models.CASCADE, related_name="target_object")
 
     objects = ObjectPermissionManager()
-    
 
     def get_owner_object(self):
         """
@@ -114,6 +112,31 @@ class APIKey(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     client = models.ForeignKey(APIKeyClient, on_delete=models.CASCADE, related_name="api_key")
+
+    def __str__(self):
+        return self.key
+
+
+class Session(models.Model):
+    """The session model"""
+
+    ip = models.GenericIPAddressField()
+    latitude = models.FloatField(blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
+    time_zone = models.CharField(max_length=255)
+    asn = models.CharField(max_length=255)
+    a_s = models.CharField(max_length=255)
+    is_proxy = models.BooleanField(default=False)
+    is_vpn = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    country = models.ForeignKey("geo.Country", on_delete=models.CASCADE, blank=True, null=True)
+    administrative_level_primary = models.ForeignKey("geo.AdministrativeLevelPrimary", on_delete=models.CASCADE, blank=True, null=True)
+    administrative_level_secondary = models.ForeignKey("geo.AdministrativeLevelSecondary", on_delete=models.CASCADE, blank=True, null=True)
+    city = models.ForeignKey("geo.City", on_delete=models.CASCADE, blank=True, null=True)
+    token = models.ForeignKey(AuthToken, on_delete=models.CASCADE, blank=True, null=True)
+    api_key = models.ForeignKey("auth_core.APIKey", on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.key

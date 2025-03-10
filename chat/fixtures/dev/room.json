@@ -1,0 +1,8 @@
+[
+  {
+    "model": "chat.room",
+    "fields": {
+      "name": "Poker"
+    }
+  }
+]

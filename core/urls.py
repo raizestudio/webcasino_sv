@@ -5,10 +5,14 @@ from django.urls import path
 from django.urls.conf import include
 from rest_framework.routers import DefaultRouter
 
-from core.views import RootView
+from core.views import MenuViewSet, RootView
+
+router = DefaultRouter()
+router.register(r"menus", MenuViewSet)
 
 urlpatterns = [
     path("", RootView.as_view(), name="root-view"),
+    path("app/", include(router.urls)),
     path("admin/", admin.site.urls),
     # path("auth/login/", LoginView.as_view()),
     # path("auth/logout/", LogoutView.as_view()),

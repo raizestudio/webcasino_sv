@@ -43,5 +43,6 @@ class Command(BaseCommand):
             _wallet = Wallet.objects.create(user=_user, currency=_free_currency, balance=1000)
             _user_security = UserSecurity.objects.create(user=_user)
             _user_preferences = UserPreferences.objects.create(user=_user)
+            _player_profile = PlayerProfile.objects.create(user=_user)
 
         self.stdout.write(self.style.SUCCESS(f"Superuser created successfully: {options['username']}"))

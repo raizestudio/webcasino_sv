@@ -14,6 +14,8 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG")
 ALLOWED_HOSTS = ["*"]
 
+# API
+API_VERSION = env("API_VERSION", default="0.0.1")
 
 # Application definition
 INSTALLED_APPS = [
@@ -154,6 +156,27 @@ LOG_DIR = BASE_DIR / "logs"
 if not LOG_DIR.exists():
     LOG_DIR.mkdir()
 
+# Knox
+KNOX_TOKEN_MODEL = "knox.AuthToken"
+REST_KNOX = {
+    # "SECURE_HASH_ALGORITHM": "hashlib.sha512",
+    # "AUTH_TOKEN_CHARACTER_LENGTH": 64,
+    # "TOKEN_TTL": timedelta(hours=10),
+    # "USER_SERIALIZER": "knox.serializers.UserSerializer",
+    # "TOKEN_LIMIT_PER_USER": None,
+    # "AUTO_REFRESH": False,
+    # "AUTO_REFRESH_MAX_TTL": None,
+    # "MIN_REFRESH_INTERVAL": 60,
+    # "AUTH_HEADER_PREFIX": "Token",
+    # "EXPIRY_DATETIME_FORMAT": api_settings.DATETIME_FORMAT,
+    # "TOKEN_MODEL": "knox.AuthToken",
+}
+
+# IP Info
+IP_INFO_URL = env("IP_INFO_URL")
+IP_INFO_TOKEN = env("IP_INFO_TOKEN")
+
+# Logging
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,

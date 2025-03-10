@@ -10,7 +10,7 @@ from users.serializers import UserSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
+    queryset = User.objects.all().select_related("player_profile")
     serializer_class = UserSerializer
     permission_classes = (IsAdminOrAPIKeyUser,)
     authentication_classes = (APIKeyAuthentication, TokenAuthentication)

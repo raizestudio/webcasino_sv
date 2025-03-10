@@ -1,3 +1,5 @@
+import requests
+from django.conf import settings
 from django.contrib.auth import login
 
 # from rest_framework.authentication import TokenAuthentication
@@ -5,19 +7,23 @@ from knox.auth import TokenAuthentication
 from knox.views import LoginView as KnoxLoginView
 from knox.views import LogoutAllView as KnoxLogoutAllView
 from knox.views import LogoutView as KnoxLogoutView
+from rest_framework import request, status
+from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from auth_core.authentication import APIKeyAuthentication
-from auth_core.models import APIKey, APIKeyClient
+from auth_core.models import APIKey, APIKeyClient, Session
 from auth_core.permissions import IsAdminOrAPIKeyUser, IsAuthenticatedOrAPIKeyUser
 from auth_core.serializers import (
     APIKeyClientSerializer,
     APIKeySerializer,
     CustomAuthTokenSerializer,
+    SessionSerializer,
 )
+from geo.models import Country
 from users.serializers import UserSerializer
 
 
@@ -32,11 +38,9 @@ class LoginView(KnoxLoginView):
         # return super().post(request, format=None)
 
         knox_response = super().post(request, format=None).data
-        user_data = UserSerializer(user).data
+        user_data = UserSerializer(user, context={"request": request}).data
 
-        return Response(
-            {"token": knox_response["token"], "expiry": knox_response["expiry"], "user": user_data}
-        )  # Add user info
+        return Response({"token": knox_response["token"], "expiry": knox_response["expiry"], "user": user_data})  # Add user info
 
 
 class AuthView(APIView):
@@ -47,7 +51,7 @@ class AuthView(APIView):
         user = request.user
 
         if hasattr(user, "is_authenticated"):
-            return Response({"user": UserSerializer(user).data})
+            return Response({"user": UserSerializer(user, context={"request": request}).data})
 
         if hasattr(user, "api_key"):
             return Response({"api_key_client": APIKeyClientSerializer(user).data})
@@ -81,3 +85,44 @@ class APIKeyViewSet(ModelViewSet):
     queryset = APIKey.objects.all()
     serializer_class = APIKeySerializer
     permission_classes = (IsAdminUser,)
+
+
+class SessionViewSet(ModelViewSet):
+    queryset = Session.objects.all()
+    serializer_class = SessionSerializer
+
+    @action(detail=False, methods=["get"], url_path="ip-info")
+    def get_session_with_ip(self, request):
+        """Fetches session info with IP details"""
+        client_id = request.query_params.get("client_id")
+
+        if not client_id:
+            return Response({"error": "client_id is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            _session = Session.objects.get(ip=client_id)
+            return Response(SessionSerializer(_session).data, status=status.HTTP_200_OK)
+
+        except Session.DoesNotExist:
+            ...
+
+        # Fetch IP info from external API
+        ip_api_url = f"{settings.IP_INFO_URL}?key={settings.IP_INFO_TOKEN}&ip={client_id}"
+        try:
+            response = requests.get(ip_api_url)
+            response.raise_for_status()
+            ip_data = response.json()
+            _session = Session.objects.create(
+                ip=ip_data["ip"],
+            )
+
+            # _session.save()
+        except requests.RequestException as e:
+            return Response({"error": "Failed to fetch IP data", "details": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # Optionally store the IP info in the session (if needed)
+        # session.ip_info = ip_data  # Make sure `ip_info` exists as a JSONField in your model
+        # session.save()
+
+        return Response(SessionSerializer(_session).data, status=status.HTTP_200_OK)
+        # return Response(ip_data, status=status.HTTP_200_OK)

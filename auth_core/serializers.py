@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 
-from auth_core.models import APIKey, APIKeyClient
+from auth_core.models import APIKey, APIKeyClient, Session
 
 
 class CustomAuthTokenSerializer(serializers.Serializer):
@@ -20,9 +20,7 @@ class CustomAuthTokenSerializer(serializers.Serializer):
             user = authenticate(email=email, password=password)
             print(f"User: {user}")
             if not user:
-                raise serializers.ValidationError(
-                    "Unable to log in with provided credentials.", code="authorization"
-                )
+                raise serializers.ValidationError("Unable to log in with provided credentials.", code="authorization")
         else:
             raise serializers.ValidationError("Must include 'email' and 'password'.")
 
@@ -39,4 +37,10 @@ class APIKeyClientSerializer(serializers.ModelSerializer):
 class APIKeySerializer(serializers.ModelSerializer):
     class Meta:
         model = APIKey
+        fields = "__all__"
+
+
+class SessionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Session
         fields = "__all__"
