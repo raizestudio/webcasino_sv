@@ -1,4 +1,4 @@
-from uuid import UUID
+import uuid
 
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
@@ -120,12 +120,14 @@ class APIKey(models.Model):
 class Session(models.Model):
     """The session model"""
 
-    ip = models.GenericIPAddressField()
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    ip = models.GenericIPAddressField(unique=True)
+    user_agent = models.CharField(max_length=255, blank=True)
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
-    time_zone = models.CharField(max_length=255)
-    asn = models.CharField(max_length=255)
-    a_s = models.CharField(max_length=255)
+    time_zone = models.CharField(max_length=255, blank=True)
+    asn = models.CharField(max_length=255, blank=True)
+    a_s = models.CharField(max_length=255, blank=True)
     is_proxy = models.BooleanField(default=False)
     is_vpn = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

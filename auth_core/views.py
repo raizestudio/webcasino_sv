@@ -107,13 +107,14 @@ class SessionViewSet(ModelViewSet):
             ...
 
         # Fetch IP info from external API
-        ip_api_url = f"{settings.IP_INFO_URL}?key={settings.IP_INFO_TOKEN}&ip={client_id}"
+        ip_api_url = f"{settings.IP_INFO_URL}json/{client_id}"
         try:
             response = requests.get(ip_api_url)
             response.raise_for_status()
             ip_data = response.json()
+            print(ip_data["ipAddress"])
             _session = Session.objects.create(
-                ip=ip_data["ip"],
+                ip=ip_data["ipAddress"],
             )
 
             # _session.save()
