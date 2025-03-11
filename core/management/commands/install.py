@@ -29,6 +29,7 @@ class Command(BaseCommand):
         self.stdout.write(self.style.NOTICE("Starting installation..."))
         call_command("makemigrations")
         call_command("flush", "--noinput")
+        # call_command("migrate", verbosity=0)
         call_command("migrate")
 
         if not options.get("no_fixtures"):
