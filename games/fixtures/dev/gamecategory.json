@@ -2,13 +2,36 @@
   {
     "model": "games.gamecategory",
     "fields": {
-      "name": "Table"
+      "code": "inhouse",
+      "name": "Inhouse"
     }
   },
   {
     "model": "games.gamecategory",
     "fields": {
+      "code": "poker",
+      "name": "Poker"
+    }
+  },
+  {
+    "model": "games.gamecategory",
+    "fields": {
+      "code": "blackjack",
+      "name": "Blackjack"
+    }
+  },
+  {
+    "model": "games.gamecategory",
+    "fields": {
+      "code": "slots",
       "name": "Slots"
+    }
+  },
+  {
+    "model": "games.gamecategory",
+    "fields": {
+      "code": "live",
+      "name": "Live"
     }
   }
 ]

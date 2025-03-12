@@ -2,13 +2,13 @@
   {
     "model": "games.game",
     "fields": {
-      "name": "Slot Legends",
-      "description": "Slot Legends is a 5-reel, 3-row video slot featuring Wilds, Free Spins, and a Bonus Game.",
-      "release_date": "2022-01-01",
-      "rating": 4.5,
-      "created_at": "2022-01-01T00:00:00Z",
-      "updated_at": "2022-01-01T00:00:00Z",
-      "category": 1
+      "name": "Coin Flip",
+      "description": "Coin Flip is a simple game where you bet on the outcome of a coin flip.",
+      "release_date": "2025-03-10",
+      "rating": 0,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z",
+      "category": "inhouse"
     }
   }
 ]

@@ -2,7 +2,9 @@ from django.db import models
 
 
 class GameCategory(models.Model):
+    code = models.CharField(max_length=10, primary_key=True)
     name = models.CharField(max_length=100)
+    order = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
