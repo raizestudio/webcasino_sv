@@ -50,7 +50,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
     avatar = models.ImageField(upload_to="avatars/", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    # updated_at = models.DateTimeField(auto_now=True)
 
     objects = UserManager()
 
@@ -137,7 +137,7 @@ class PlayerProfileQuerySet(models.QuerySet):
 class PlayerProfile(models.Model):
     """The player profile model"""
 
-    rank = models.IntegerField(default=0)
+    level = models.IntegerField(default=0)
     experience = models.IntegerField(default=0)
     referral_code = models.CharField(max_length=10, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -3,7 +3,7 @@ from django.conf import settings
 from django.urls import reverse
 
 
-class TestRootView:
+class TestApiRootView:
     """Test for the root endpoint"""
 
     @pytest.mark.django_db
