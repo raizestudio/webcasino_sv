@@ -67,6 +67,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-Your Name - [your.email@example.com](mailto:your.email@example.com)
+Joel P. - [raizetvision@gmail.com](mailto:raizetvision@gmail.com)
 
-Project Link: [https://github.com/yourusername/yourproject](https://github.com/yourusername/yourproject)
+Project Link: [https://github.com/raizestudio/webcasino_sv](https://github.com/raizestudio/webcasino_sv)
