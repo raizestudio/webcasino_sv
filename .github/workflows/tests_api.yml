@@ -51,5 +51,7 @@ jobs:
         run: |
           echo "DATABASE_URL=postgresql://postgres:password@localhost:5432/test_db" >> $GITHUB_ENV
           echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
+          echo "IP_INFO_URL=${{ env.IP_INFO_URL }}" >> $GITHUB_ENV
+          echo "IP_INFO_TOKEN=${{ secrets.IP_INFO_TOKEN }}" >> $GITHUB_ENV
       - name: Run tests
         run: pytest
