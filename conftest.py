@@ -1,7 +1,9 @@
 import pytest
 from colorama import Back, Fore, Style
+from django.apps import apps
 from django.contrib.auth import get_user_model
 from django.core.management import call_command
+from knox.models import get_token_model
 
 
 @pytest.hookimpl(hookwrapper=True)
@@ -26,6 +28,21 @@ def load_fixtures(db):
 
 @pytest.fixture()
 def create_super_user_auth(db):
-    get_user_model().objects.create_superuser(email="test@test.io", username="test", password="test")
+    _user = get_user_model().objects.create_superuser(email="test@test.io", username="test", password="test")
 
-    print(Fore.CYAN + "Superuser created..." + Style.RESET_ALL)
+    token_model = get_token_model()
+    _token_instance, raw_token = token_model.objects.create(get_user_model().objects.get(email="test@test.io"))
+    print(Fore.CYAN + f"Superuser created as {_user} with token {_token_instance}..." + Style.RESET_ALL)
+    return raw_token
+
+
+@pytest.fixture()
+def create_api_key():
+    api_key_client_model = apps.get_model("auth_core", "APIKeyClient")
+    api_key_client = api_key_client_model.objects.create(name="Test API Key Client")
+
+    api_key_model = apps.get_model("auth_core", "APIKey")
+    api_key = api_key_model.objects.create(client=api_key_client)
+
+    print(Fore.CYAN + "API Key Client created..." + Style.RESET_ALL)
+    return api_key

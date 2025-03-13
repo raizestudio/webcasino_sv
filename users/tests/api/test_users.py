@@ -2,9 +2,10 @@ import sys
 
 import pytest
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.urls import reverse
 
-from users.models import User
+from users.serializers import UserSerializer
 
 
 class TestUsersView:
@@ -20,12 +21,28 @@ class TestUsersView:
         assert response.json() == {"detail": "Authentication credentials were not provided."}
 
     @pytest.mark.django_db
-    def test_users_list_user_auth(self, client, create_super_user):
+    def test_users_list_user_auth(self, client, create_super_user_auth):
         """Test users list endpoint with user authentication"""
         url = reverse("users-list")
-        # _user = User.objects.get(email="test@test.io")
 
-        response = client.get(url)
+        _token = create_super_user_auth
+        print(f"Token: {_token}")
+        response = client.get(url, headers={"Authorization": f"Token {_token}"})
 
-        # assert response.status_code == 403
-        # assert response.json() == {"detail": "You do not have permission to perform this action."}
+        users = UserSerializer(get_user_model().objects.all(), many=True).data
+
+        assert response.status_code == 200
+        assert response.json() == users
+
+    @pytest.mark.django_db
+    def test_users_list_api_key_auth(self, client, create_api_key):
+        """Test users list endpoint with user authentication"""
+        url = reverse("users-list")
+
+        _api_key = create_api_key
+        response = client.get(url, headers={"x-api-key": _api_key.key})
+
+        users = UserSerializer(get_user_model().objects.all(), many=True).data
+
+        assert response.status_code == 200
+        assert response.json() == users

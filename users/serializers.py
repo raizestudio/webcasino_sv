@@ -57,4 +57,5 @@ class PlayerProfileSerializer(FlexFieldsModelSerializer):
         fields = "__all__"
         expandable_fields = {
             "user": UserSerializer,
+            "favorite_games": "games.serializers.GameSerializer",
         }
