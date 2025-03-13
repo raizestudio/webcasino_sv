@@ -26,7 +26,6 @@ class TestUsersView:
         url = reverse("users-list")
 
         _token = create_super_user_auth
-        print(f"Token: {_token}")
         response = client.get(url, headers={"Authorization": f"Token {_token}"})
 
         users = UserSerializer(get_user_model().objects.all(), many=True).data

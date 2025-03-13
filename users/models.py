@@ -1,9 +1,11 @@
+from django.apps import apps
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
     PermissionsMixin,
 )
 from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import ImproperlyConfigured
 from django.db import models
 
 from auth_core.models import ObjectPermission
@@ -153,3 +155,8 @@ class PlayerProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+def get_player_profile_model():
+    """Return the player profile model"""
+    return apps.get_model("auth_core", "PlayerProfile")
