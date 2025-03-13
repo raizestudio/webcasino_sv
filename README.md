@@ -2,6 +2,8 @@
 
 Just a casino for the web.
 
+[![API Tests](https://github.com/raizestudio/webcasino_sv/actions/workflows/tests_api.yml/badge.svg)](https://github.com/raizestudio/webcasino_sv/actions/workflows/tests_api.yml)
+
 ## Table of Contents
 
 - [Installation](#installation)
