@@ -33,7 +33,11 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 # Install the project
-python manage.py install
+make install
+
+# or if you don't have make installed
+python manage.py migrate  # TODO: finish installation instructions
+
 ```
 
 ## Usage
@@ -43,6 +47,7 @@ Instructions and examples for using the project.
 ```bash
 # Run the project
 python manage.py runserver
+
 ```
 
 ## Contributing
