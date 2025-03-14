@@ -1,4 +1,3 @@
-from django.apps import apps
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
@@ -155,8 +154,3 @@ class PlayerProfile(models.Model):
 
     def __str__(self):
         return self.user.username
-
-
-def get_player_profile_model():
-    """Return the player profile model"""
-    return apps.get_model("auth_core", "PlayerProfile")

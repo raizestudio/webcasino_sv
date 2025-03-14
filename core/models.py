@@ -24,3 +24,22 @@ class Menu(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ApiProvider(models.Model):
+    """The API provider model"""
+
+    name = models.CharField(max_length=100)
+    base_url = models.URLField()
+    description = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+        ordering = ["name"]
+        verbose_name = "API Provider"
+        verbose_name_plural = "API Providers"
+
+    def __str__(self):
+        return self.name

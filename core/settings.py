@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "django_celery_results",
     "django_filters",
     "channels",
     "corsheaders",
@@ -158,7 +159,7 @@ AUTHENTICATION_BACKENDS = [
 
 # Cache
 CACHE_HOST = env("CACHE_HOST", default="")
-CACHE_PORT = env("CACHE_PORT", default="")
+CACHE_PORT = env("CACHE_PORT", default="6379")
 CACHE_DB = env("CACHE_DB", default="")
 CACHE_TTL = env("CACHE_TTL", default=60)
 # CACHE_PASSWORD = env("CACHE_PASSWORD", default="")
@@ -166,9 +167,18 @@ CACHE_TTL = env("CACHE_TTL", default=60)
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": f"redis://127.0.0.1:6379",
+        "LOCATION": f"redis://{CACHE_HOST}:{CACHE_PORT}",
     }
 }
+
+# Celery
+# CELERY_BROKER_URL = f"redis://{CACHE_HOST}:{CACHE_PORT}"
+CELERY_BROKER_URL = "pyamqp://admin:admin@localhost:5672//"
+CELERY_RESULT_BACKEND = "django-db"
+# CELERY_TASK_SERIALIZER = "json"
+CELERY_TASK_RESULT_EXPIRES = 3600
+CELERY_TASK_ACKS_LATE = True
+CELERY_TASK_TRACK_STARTED = True
 
 # Logging
 LOG_DIR = BASE_DIR / "logs"

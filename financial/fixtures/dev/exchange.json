@@ -1,0 +1,8 @@
+[
+  {
+    "model": "financial.exchange",
+    "fields": {
+      "name": "Binance"
+    }
+  }
+]

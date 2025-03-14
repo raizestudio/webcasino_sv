@@ -1,12 +1,24 @@
 from rest_flex_fields import FlexFieldsModelSerializer
 from rest_framework import serializers
 
-from financial.models import Currency, Pool, Wallet
+from financial.models import Currency, Exchange, FinancialApiProvider, Pool, Wallet
 
 
 class CurrencySerializer(serializers.ModelSerializer):
     class Meta:
         model = Currency
+        fields = "__all__"
+
+
+class ExchangeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Exchange
+        fields = "__all__"
+
+
+class FinancialApiProviderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FinancialApiProvider
         fields = "__all__"
 
 

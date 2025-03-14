@@ -24,6 +24,7 @@ AVAILABLE_FIXTURES = (
     "chat.room",
     # financial
     "financial.currency",
+    "financial.exchange",
     # games
     "games.gamecategory",
     "games.game",

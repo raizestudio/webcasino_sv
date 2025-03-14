@@ -45,6 +45,9 @@ python manage.py migrate  # TODO: finish installation instructions
 Instructions and examples for using the project.
 
 ```bash
+# Start celery worker
+celery -A core worker --loglevel=info
+
 # Run the project
 python manage.py runserver
 

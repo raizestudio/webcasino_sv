@@ -1,5 +1,7 @@
 from django.core.management import BaseCommand, CommandError, call_command
 
+from core.tasks import fetch_global_data
+
 DEV_USERS = [
     {
         "email": "t@t.io",
@@ -55,5 +57,8 @@ class Command(BaseCommand):
                         f"--username={user['username']}",
                         f"--password={user['password']}",
                     )
+
+        self.stdout.write(self.style.NOTICE("Fetching global data..."))
+        fetch_global_data.delay()
 
         self.stdout.write(self.style.SUCCESS("All done!"))
