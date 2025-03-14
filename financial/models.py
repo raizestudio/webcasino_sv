@@ -8,15 +8,46 @@ class Currency(models.Model):
 
     code = models.CharField(primary_key=True, max_length=10)
     name = models.CharField(max_length=100)
-    minor_unit = models.IntegerField()
+    minor_unit = models.IntegerField(default=2)
     symbol = models.CharField(max_length=10)
-    is_crypto = models.BooleanField(default=False)
+    # is_crypto = models.BooleanField(default=False)
     can_deposit = models.BooleanField(default=False)
     can_withdraw = models.BooleanField(default=False)
     is_free = models.BooleanField(default=False)
 
+    class Meta:
+        verbose_name_plural = "currencies"
+
     def __str__(self):
         return self.name
+
+
+class Ticker(models.Model):
+    """The ticker model"""
+
+    external_id = models.CharField(max_length=100)
+    rank = models.IntegerField()
+    price_usd = models.FloatField()
+    percent_change_24h = models.FloatField()
+    percent_change_1h = models.FloatField()
+    percent_change_7d = models.FloatField()
+    price_btc = models.FloatField()
+    market_cap_usd = models.FloatField()
+    volume24 = models.FloatField()
+    volume24a = models.FloatField()
+    csupply = models.FloatField()
+    tsupply = models.FloatField()
+    msupply = models.FloatField()
+
+    currency = models.ForeignKey("Currency", on_delete=models.CASCADE)
+    exchange = models.ForeignKey("Exchange", on_delete=models.CASCADE, null=True)
+    financial_api_provider = models.ForeignKey("FinancialApiProvider", on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ("currency", "exchange")
+
+    def __str__(self):
+        return f"{self.currency.code} on {self.exchange.name}"
 
 
 class Exchange(models.Model):

@@ -1,4 +1,4 @@
-from typing import List, TypedDict
+from typing import List, Optional, TypedDict
 
 
 class ICoinLoreGlobalResponse(TypedDict):
@@ -29,7 +29,7 @@ class ICoinLoreTickerResponse(TypedDict):
     market_cap_usd: str
     volume24: str
     volume24a: str
-    csupply: str
+    csupply: Optional[str]
     tsupply: str
     msupply: str
 

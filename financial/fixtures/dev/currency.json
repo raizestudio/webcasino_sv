@@ -6,7 +6,6 @@
       "name": "token",
       "minor_unit": 8,
       "symbol": "£",
-      "is_crypto": true,
       "can_deposit": false,
       "can_withdraw": false,
       "is_free": true

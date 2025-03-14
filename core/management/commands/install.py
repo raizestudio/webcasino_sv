@@ -26,6 +26,7 @@ class Command(BaseCommand):
         parser.add_argument("--no-users", action="store_true", help="Do not create dev users")
         parser.add_argument("--no-fixtures", action="store_true", help="Do not load fixtures")
         parser.add_argument("--no-migrations", action="store_true", help="Do not run migrations")
+        parser.add_argument("--load-api-data", action="store_true", help="Load global data from API")
 
     def handle(self, *args, **options):
         self.stdout.write(self.style.NOTICE("Starting installation..."))
@@ -59,6 +60,8 @@ class Command(BaseCommand):
                     )
 
         self.stdout.write(self.style.NOTICE("Fetching global data..."))
-        fetch_api_data.delay()
+
+        if options.get("load_api_data"):
+            fetch_api_data.delay()
 
         self.stdout.write(self.style.SUCCESS("All done!"))
