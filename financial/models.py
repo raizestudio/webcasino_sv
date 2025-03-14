@@ -4,6 +4,8 @@ from core.models import ApiProvider
 
 
 class Currency(models.Model):
+    """The currency model"""
+
     code = models.CharField(primary_key=True, max_length=10)
     name = models.CharField(max_length=100)
     minor_unit = models.IntegerField()
@@ -18,6 +20,8 @@ class Currency(models.Model):
 
 
 class Exchange(models.Model):
+    """The exchange model"""
+
     name = models.CharField(max_length=100)
 
     class Meta:
@@ -48,6 +52,8 @@ class FinancialApiProvider(ApiProvider):
 
 
 class Wallet(models.Model):
+    """The wallet model"""
+
     balance = models.FloatField()
 
     user = models.ForeignKey("users.User", on_delete=models.CASCADE)
@@ -58,6 +64,8 @@ class Wallet(models.Model):
 
 
 class Pool(models.Model):
+    """The pool model"""
+
     balance = models.FloatField()
 
     currency = models.ForeignKey(Currency, on_delete=models.CASCADE)

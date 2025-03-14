@@ -1,6 +1,6 @@
 from django.core.management import BaseCommand, CommandError, call_command
 
-from core.tasks import fetch_global_data
+from core.tasks import fetch_api_data
 
 DEV_USERS = [
     {
@@ -59,6 +59,6 @@ class Command(BaseCommand):
                     )
 
         self.stdout.write(self.style.NOTICE("Fetching global data..."))
-        fetch_global_data.delay()
+        fetch_api_data.delay()
 
         self.stdout.write(self.style.SUCCESS("All done!"))

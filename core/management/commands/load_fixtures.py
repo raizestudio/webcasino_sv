@@ -25,6 +25,7 @@ AVAILABLE_FIXTURES = (
     # financial
     "financial.currency",
     "financial.exchange",
+    "financial.financialapiprovider",
     # games
     "games.gamecategory",
     "games.game",

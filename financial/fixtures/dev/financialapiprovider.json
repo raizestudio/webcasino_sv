@@ -1,0 +1,12 @@
+[
+  {
+    "model": "financial.financialapiprovider",
+    "fields": {
+      "name": "CoinLore",
+      "base_url": "https://api.coinlore.net/api/",
+      "description": "CoinLore API",
+      "created_at": "2021-07-01T00:00:00Z",
+      "updated_at": "2021-07-01T00:00:00Z"
+    }
+  }
+]
