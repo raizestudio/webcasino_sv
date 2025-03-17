@@ -1,7 +1,13 @@
 from rest_framework.viewsets import ModelViewSet
 
-from financial.models import Currency, Pool, Wallet
-from financial.serializers import CurrencySerializer, PoolSerializer, WalletSerializer
+from financial.models import Currency, Exchange, FinancialApiProvider, Pool, Wallet
+from financial.serializers import (
+    CurrencySerializer,
+    ExchangeSerializer,
+    FinancialApiProviderSerializer,
+    PoolSerializer,
+    WalletSerializer,
+)
 
 
 class CurrencyViewSet(ModelViewSet):
@@ -17,3 +23,13 @@ class WalletViewSet(ModelViewSet):
 class PoolViewSet(ModelViewSet):
     queryset = Pool.objects.all()
     serializer_class = PoolSerializer
+
+
+class ExchangeViewSet(ModelViewSet):
+    queryset = Exchange.objects.all()
+    serializer_class = ExchangeSerializer
+
+
+class FinancialApiProviderViewSet(ModelViewSet):
+    queryset = FinancialApiProvider.objects.all()
+    serializer_class = FinancialApiProviderSerializer

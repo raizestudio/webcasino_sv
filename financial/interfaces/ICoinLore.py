@@ -31,7 +31,7 @@ class ICoinLoreTickerResponse(TypedDict):
     volume24a: str
     csupply: Optional[str]
     tsupply: str
-    msupply: str
+    msupply: Optional[str]
 
 
 class ICoinLoreTickersResponse(TypedDict):

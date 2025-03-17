@@ -4,5 +4,29 @@
     "fields": {
       "name": "Binance"
     }
+  },
+  {
+    "model": "financial.exchange",
+    "fields": {
+      "name": "Coinbase"
+    }
+  },
+  {
+    "model": "financial.exchange",
+    "fields": {
+      "name": "OKX"
+    }
+  },
+  {
+    "model": "financial.exchange",
+    "fields": {
+      "name": "Bitget"
+    }
+  },
+  {
+    "model": "financial.exchange",
+    "fields": {
+      "name": "Bybit"
+    }
   }
 ]

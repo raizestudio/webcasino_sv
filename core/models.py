@@ -7,8 +7,9 @@ class Menu(models.Model):
     name = models.CharField(max_length=100)
     path = models.CharField(max_length=100)
     target = models.CharField(max_length=100)  # Used to identify position client side
-    description = models.TextField()
+    is_protected = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     parent = models.ForeignKey(
         "self",
@@ -43,3 +44,24 @@ class ApiProvider(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class TrackableModel(models.Model):
+    """The track model"""
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    created_by = models.ForeignKey(
+        "users.User",
+        on_delete=models.CASCADE,
+        related_name="%(class)s_created_by",
+    )
+    updated_by = models.ForeignKey(
+        "users.User",
+        on_delete=models.CASCADE,
+        related_name="%(class)s_updated_by",
+    )
+
+    class Meta:
+        abstract = True

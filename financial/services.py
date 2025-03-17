@@ -70,6 +70,7 @@ class CoinLoreApi(AbstractApi):
             defaults={
                 "name": data["nameid"],
                 "minor_unit": 8,
+                "is_crypto": True,
             },
         )
 

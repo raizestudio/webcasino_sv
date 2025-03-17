@@ -5,7 +5,8 @@
     "fields": {
       "name": "Poker",
       "path": "/poker",
-      "created_at": "2025-01-01T00:00:00Z"
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
     }
   },
   {
@@ -14,7 +15,8 @@
     "fields": {
       "name": "BlackJack",
       "path": "/blackjack",
-      "created_at": "2025-01-01T00:00:00Z"
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
     }
   },
   {
@@ -23,7 +25,8 @@
     "fields": {
       "name": "Slots",
       "path": "/games",
-      "created_at": "2025-01-01T00:00:00Z"
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
     }
   },
   {
@@ -32,7 +35,8 @@
     "fields": {
       "name": "InHouse",
       "path": "/games",
-      "created_at": "2025-01-01T00:00:00Z"
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
     }
   },
   {
@@ -41,7 +45,18 @@
     "fields": {
       "name": "Pool",
       "path": "/pools",
-      "created_at": "2025-01-01T00:00:00Z"
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.menu",
+    "pk": 6,
+    "fields": {
+      "name": "Dashboard",
+      "path": "/dashboard",
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
     }
   }
 

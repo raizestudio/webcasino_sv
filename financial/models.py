@@ -10,7 +10,7 @@ class Currency(models.Model):
     name = models.CharField(max_length=100)
     minor_unit = models.IntegerField(default=2)
     symbol = models.CharField(max_length=10)
-    # is_crypto = models.BooleanField(default=False)
+    is_crypto = models.BooleanField(default=False)
     can_deposit = models.BooleanField(default=False)
     can_withdraw = models.BooleanField(default=False)
     is_free = models.BooleanField(default=False)
@@ -35,9 +35,9 @@ class Ticker(models.Model):
     market_cap_usd = models.FloatField()
     volume24 = models.FloatField()
     volume24a = models.FloatField()
-    csupply = models.FloatField()
-    tsupply = models.FloatField()
-    msupply = models.FloatField()
+    csupply = models.FloatField(blank=True, null=True)
+    tsupply = models.FloatField(blank=True, null=True)
+    msupply = models.FloatField(blank=True, null=True)
 
     currency = models.ForeignKey("Currency", on_delete=models.CASCADE)
     exchange = models.ForeignKey("Exchange", on_delete=models.CASCADE, null=True)
@@ -47,7 +47,7 @@ class Ticker(models.Model):
         unique_together = ("currency", "exchange")
 
     def __str__(self):
-        return f"{self.currency.code} on {self.exchange.name}"
+        return f"{self.currency.code} on {self.exchange.name if self.exchange else self.financial_api_provider.name}"
 
 
 class Exchange(models.Model):
