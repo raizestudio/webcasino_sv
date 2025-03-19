@@ -30,10 +30,10 @@ def fetch_provider_data(provider_name):
         # for page in range(1, pages_count):
         for page in range(0, 1):
             res_currencies = api_provider.get_currencies()
-            print(f"Res currencies: {res_currencies}")
+            # print(f"Res currencies: {res_currencies}")
             for currency in res_currencies["data"]:
                 cleaned_currency = {key: (None if currency.get(key, None) in ["''.", "", None] else currency.get(key)) for key in currency}
-                print(currency)
+                # print(currency)
                 api_provider._set_currency_data(cleaned_currency)
 
         # res_ticker = api_provider.get_currency(90)

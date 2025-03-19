@@ -1,0 +1,9 @@
+[
+  {
+    "model": "financial.pool",
+    "fields": {
+      "balance": 1000,
+      "currency": "tkn"
+    }
+  }
+]
